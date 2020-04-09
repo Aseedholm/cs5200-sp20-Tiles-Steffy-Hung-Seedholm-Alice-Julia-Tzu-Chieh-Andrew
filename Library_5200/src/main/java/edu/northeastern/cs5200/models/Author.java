@@ -1,19 +1,31 @@
 package edu.northeastern.cs5200.models;
 
-
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
+import edu.northeastern.cs5200.models.Book;
+
+
+@Entity
+@Table(name="authors")
 public class Author {
 
+    @Id
+    @GeneratedValue
     private Integer author_id;
     private String firstName;
     private String lastName;
     private String penName;
     private Date dateOfBirth;
     private Date dateOfDeath;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private Set<Book> booksWritten;
 
+//    org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory'
+//    defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is o
+//    rg.hibernate.AnnotationException: mappedBy reference an unknown target entity property: edu.northeastern.cs5200.models.Book.books in edu.northeastern.cs5200.models.Author.booksWritten
 
     public Author() {
 
@@ -86,5 +98,18 @@ public class Author {
 
     public void setBooksWritten(Set<Book> booksWritten) {
         this.booksWritten = booksWritten;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "author_id=" + author_id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", penName='" + penName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", dateOfDeath=" + dateOfDeath +
+                ", booksWritten=" + booksWritten +
+                '}';
     }
 }
