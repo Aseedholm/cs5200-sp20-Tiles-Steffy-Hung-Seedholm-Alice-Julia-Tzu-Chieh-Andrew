@@ -16,10 +16,13 @@ public class AudioBook extends Book {
     // private Set<String> languagesAvailable;
 
 
+    public AudioBook() {
+    }
+
     public AudioBook(Integer book_id, String title, Author author, Date yearPublished,
                      Genre genre, String ISBN, String narratedBy, Integer numMinutes, Double fileSizeMb,
-                     String fileType){
-        super(book_id, title, author, yearPublished, genre, ISBN);
+                     String fileType,  Set<BookCopy> bookCopies){
+        super(book_id, title, author, yearPublished, genre, ISBN, bookCopies);
             this.narratedBy = narratedBy;
             this.numMinutes = numMinutes;
             this.fileSizeMb = fileSizeMb;

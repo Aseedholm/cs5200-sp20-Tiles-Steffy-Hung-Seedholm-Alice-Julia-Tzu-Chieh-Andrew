@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
-import edu.northeastern.cs5200.models.Book;
-
 
 @Entity
 @Table(name="authors")
@@ -13,7 +11,7 @@ public class Author {
 
     @Id
     @GeneratedValue
-    private Integer author_id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String penName;
@@ -34,7 +32,7 @@ public class Author {
 
     public Author(Integer id, String firstName, String lastName, String penName,
                   Date dateOfBirth, Date dateOfDeath, Set<Book> booksWritten) {
-        this.author_id = id;
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.penName = penName;
@@ -45,11 +43,11 @@ public class Author {
 
 
     public Integer getId() {
-        return author_id;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.author_id = id;
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -103,7 +101,7 @@ public class Author {
     @Override
     public String toString() {
         return "Author{" +
-                "author_id=" + author_id +
+                "author_id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", penName='" + penName + '\'' +

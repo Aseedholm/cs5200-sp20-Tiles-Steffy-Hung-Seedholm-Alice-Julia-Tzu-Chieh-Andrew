@@ -1,6 +1,6 @@
 package edu.northeastern.cs5200.models;
 
-public enum Condition {
+public enum CurrentCondition {
     NEW,
     GOOD,
     ACCEPTABLE,

@@ -2,6 +2,7 @@ package edu.northeastern.cs5200.models;
 
 import javax.persistence.Entity;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity(name="hard_copy_books")
 public class HardCopyBook extends Book {
@@ -13,8 +14,8 @@ public class HardCopyBook extends Book {
     }
 
     public HardCopyBook(Integer book_id, String title, Author author, Date yearPublished,
-                        Genre genre, String ISBN, Integer numPages) {
-        super(book_id, title, author, yearPublished, genre, ISBN);
+                        Genre genre, String ISBN, Integer numPages, Set<BookCopy> bookCopies) {
+        super(book_id, title, author, yearPublished, genre, ISBN, bookCopies);
         this.numPages = numPages;
 
     }
