@@ -16,7 +16,37 @@ public class LibraryCard {
 
     private Date expirationDate;
 
+    public LibraryCard(Integer id, Member member, Date expirationDate) {
+        this.id = id;
+        this.member = member;
+        this.expirationDate = expirationDate;
+    }
 
 
+    public LibraryCard() {
+    }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 }
