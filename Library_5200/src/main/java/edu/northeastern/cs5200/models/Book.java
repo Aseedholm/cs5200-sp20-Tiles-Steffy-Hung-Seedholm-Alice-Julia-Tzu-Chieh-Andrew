@@ -1,15 +1,14 @@
 package edu.northeastern.cs5200.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity(name="books")
 public class Book {
 
     @Id
-    private Integer book_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer bookId;
 
     @ManyToOne
     private Author author;
@@ -17,30 +16,30 @@ public class Book {
     private String title;
     private Date yearPublished;
     private Genre genre;
+
+    @Column(unique=true)
     private String ISBN;
-    private Integer numPages;
 
     public Book(){
 
     }
 
-    public Book(Integer book_id, String title, Author author, Date yearPublished,
-                Genre genre, String ISBN, Integer numPages) {
-        this.book_id = book_id;
+    public Book(Integer bookId, String title, Author author, Date yearPublished,
+                Genre genre, String ISBN) {
+        this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;
         this.genre = genre;
         this.ISBN = ISBN;
-        this.numPages = numPages;
     }
 
     public Integer getBook_id() {
-        return book_id;
+        return bookId;
     }
 
     public void setBook_id(Integer book_id) {
-        this.book_id = book_id;
+        this.bookId = book_id;
     }
 
     public String getTitle() {
@@ -83,24 +82,15 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public Integer getNumPages() {
-        return numPages;
-    }
-
-    public void setNumPages(Integer numPages) {
-        this.numPages = numPages;
-    }
-
     @Override
     public String toString() {
         return "Book{" +
-                "book_id=" + book_id +
+                "book_id=" + bookId +
                 ", title='" + title + '\'' +
                 ", author=" + author +
                 ", yearPublished=" + yearPublished +
                 ", genre=" + genre +
                 ", ISBN='" + ISBN + '\'' +
-                ", numPages=" + numPages +
                 '}';
     }
 }
