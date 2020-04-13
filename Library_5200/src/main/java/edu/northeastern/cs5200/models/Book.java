@@ -1,46 +1,47 @@
 package edu.northeastern.cs5200.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name="books")
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Book {
 
     @Id
-    private Integer book_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     private Author author;
 
     private String title;
     private Date yearPublished;
-    private Genre genre;
+
+    private String genre;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private Set<BookCopy> bookCopies;
+
+    @Column(unique=true)
     private String ISBN;
-    private Integer numPages;
 
     public Book(){
-
+        this.bookCopies = new HashSet<BookCopy>();
     }
 
-    public Book(Integer book_id, String title, Author author, Date yearPublished,
-                Genre genre, String ISBN, Integer numPages) {
-        this.book_id = book_id;
+    public Book(Integer id, String title, Author author, Date yearPublished,
+                String genre, String ISBN, Set<BookCopy> bookCopies) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;
         this.genre = genre;
         this.ISBN = ISBN;
-        this.numPages = numPages;
-    }
-
-    public Integer getBook_id() {
-        return book_id;
-    }
-
-    public void setBook_id(Integer book_id) {
-        this.book_id = book_id;
+        this.bookCopies = bookCopies;
     }
 
     public String getTitle() {
@@ -67,12 +68,13 @@ public class Book {
         this.yearPublished = yearPublished;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
     public void setGenre(Genre genre) {
-        this.genre = genre;
+        System.out.println("Genre: " + genre);
+        this.genre = genre.toString();
     }
 
     public String getISBN() {
@@ -83,24 +85,51 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public Integer getNumPages() {
-        return numPages;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNumPages(Integer numPages) {
-        this.numPages = numPages;
+    public void setId(Integer id) {
+        this.id = id;
     }
+
+    public Set<BookCopy> getBookCopies() {
+        return bookCopies;
+    }
+
+    public void setBookCopies(Set<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
+    }
+
+
+    public void addCopy(){
+        BookCopy newCopy = new BookCopy();
+        newCopy.setBook(this);
+        newCopy.setAvailable(true);
+        newCopy.setEdition(null);
+        newCopy.setCondition(CurrentCondition.NEW);
+        this.bookCopies.add(newCopy);
+    }
+
+    public void addCopy(Integer edition){
+        BookCopy newCopy = new BookCopy();
+        newCopy.setBook(this);
+        newCopy.setAvailable(true);
+        newCopy.setEdition(edition);
+        newCopy.setCondition(CurrentCondition.NEW);
+        this.bookCopies.add(newCopy);
+    }
+
 
     @Override
     public String toString() {
         return "Book{" +
-                "book_id=" + book_id +
+                "book_id=" + id +
                 ", title='" + title + '\'' +
                 ", author=" + author +
                 ", yearPublished=" + yearPublished +
                 ", genre=" + genre +
                 ", ISBN='" + ISBN + '\'' +
-                ", numPages=" + numPages +
                 '}';
     }
 }

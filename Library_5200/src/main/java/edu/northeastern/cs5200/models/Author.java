@@ -2,9 +2,8 @@ package edu.northeastern.cs5200.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
-
-import edu.northeastern.cs5200.models.Book;
 
 
 @Entity
@@ -13,7 +12,7 @@ public class Author {
 
     @Id
     @GeneratedValue
-    private Integer author_id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String penName;
@@ -23,18 +22,14 @@ public class Author {
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private Set<Book> booksWritten;
 
-//    org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory'
-//    defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is o
-//    rg.hibernate.AnnotationException: mappedBy reference an unknown target entity property: edu.northeastern.cs5200.models.Book.books in edu.northeastern.cs5200.models.Author.booksWritten
-
     public Author() {
-
+        this.booksWritten = new HashSet<>();
     }
 
 
     public Author(Integer id, String firstName, String lastName, String penName,
                   Date dateOfBirth, Date dateOfDeath, Set<Book> booksWritten) {
-        this.author_id = id;
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.penName = penName;
@@ -45,11 +40,11 @@ public class Author {
 
 
     public Integer getId() {
-        return author_id;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.author_id = id;
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -103,7 +98,7 @@ public class Author {
     @Override
     public String toString() {
         return "Author{" +
-                "author_id=" + author_id +
+                "author_id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", penName='" + penName + '\'' +
