@@ -20,22 +20,22 @@ public class LibraryCardController {
 	@Autowired
 	LibraryDao libraryDao;
 
-	@PostMapping("api/libraryCard")
+	@PostMapping("api/library-cards")
 	public LibraryCard createLibraryCard(@RequestBody LibraryCard card) {
 		return libraryDao.createLibraryCard(card);
 	}
 
-	@GetMapping("/api/libraryCards")
+	@GetMapping("/api/library-cards")
 	public List<LibraryCard> findAllLibraryCards() {
-		return (List<LibraryCard>) libraryDao.findAllLibraryCards();
+		return libraryDao.findAllLibraryCards();
 	}
 
-	@GetMapping("/api/libraryCard/memberId/{memberId}")
+	@GetMapping("/api/library-cards/member-id/{memberId}")
 	public LibraryCard getByMemberId(@PathVariable("memberId") int memberId) {
 		return libraryDao.findLibraryCardByMemberId(memberId);
 	}
 
-	@GetMapping("/api/libraryCard/memberUsername/{memberUsername}")
+	@GetMapping("/api/library-card/member-username/{memberUsername}")
 	public LibraryCard getByMemberUsername(@PathVariable("memberUsername") String memberUsername) {
 		return libraryDao.findLibraryCardByMemberUsername(memberUsername);
 	}

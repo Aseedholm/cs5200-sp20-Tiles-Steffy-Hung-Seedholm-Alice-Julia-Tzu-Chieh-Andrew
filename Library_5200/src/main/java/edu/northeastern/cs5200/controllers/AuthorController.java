@@ -17,14 +17,14 @@ public class AuthorController {
   @Autowired
   LibraryDao libraryDao;
 
-  @PostMapping("api/author")
+  @PostMapping("api/authors")
   public Author createAuthor(@RequestBody Author author) {
     return libraryDao.createAuthor(author);
   }
 
   @GetMapping("/api/authors")
   public List<Author> findAllAuthors() {
-    return (List<Author>) libraryDao.findAllAuthors();
+    return libraryDao.findAllAuthors();
   }
 
 

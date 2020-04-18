@@ -24,7 +24,14 @@ public class AdminController {
 
   @GetMapping("/api/admins")
   public List<Admin> findAllAdmin() {
-    return (List<Admin>) libraryDao.findAllAdmin();
+    return libraryDao.findAllAdmin();
   }
+
+
+  @DeleteMapping(value = "/api/admins/{id}")
+  public boolean deleteAdmin(@PathVariable Integer id) {
+    return libraryDao.deleteAdmin(id);
+  }
+
 
 }

@@ -20,15 +20,14 @@ public class BookController {
     @Autowired
     LibraryDao libraryDao;
 
-
-    @PostMapping("api/book")
+    @PostMapping("api/books")
     public Book createBook(@RequestBody Book book) {
         return libraryDao.createBook(book);
     }
 
     @GetMapping("api/books")
     public List<Book> findAllBooks() {
-        return (List<Book>) libraryDao.findAllBooks();
+        return libraryDao.findAllBooks();
     }
 
 

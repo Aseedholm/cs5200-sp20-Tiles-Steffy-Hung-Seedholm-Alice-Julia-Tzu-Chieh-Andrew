@@ -1,12 +1,10 @@
 package edu.northeastern.cs5200.controllers;
 
 import edu.northeastern.cs5200.daos.LibraryDao;
-import edu.northeastern.cs5200.models.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import edu.northeastern.cs5200.models.Librarian;
-import edu.northeastern.cs5200.repositories.LibrarianRepository;
 
 import java.util.List;
 
@@ -25,7 +23,26 @@ public class LibrarianController {
 
   @GetMapping("/api/librarians")
   public List<Librarian> findAllLibrarians() {
-    return (List<Librarian>) libraryDao.findAllLibrarians();
+    return libraryDao.findAllLibrarians();
   }
+
+  @GetMapping("/api/librarians/id/{id}")
+  public Librarian getById(@PathVariable("id") int id) {
+    return libraryDao.findLibrarianById(id);
+  }
+
+
+  @GetMapping("/api/librarians/username/{username}")
+  public Librarian getByUsername(@PathVariable("username") String username) {
+    return libraryDao.findLibrarianByUsername(username);
+  }
+
+  @DeleteMapping(value = "/api/librarians/{id}")
+  public boolean deleteLibrarian(@PathVariable Integer id) {
+    return libraryDao.deleteLibrarian(id);
+  }
+
+
+
 
 }
