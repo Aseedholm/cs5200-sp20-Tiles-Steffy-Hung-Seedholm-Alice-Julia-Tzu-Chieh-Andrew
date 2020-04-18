@@ -29,10 +29,11 @@ public interface LibraryDao {
 
     // Finder methods -> find by ID
     Member findMemberById(int id);
-
+    LibraryCard findLibraryCardByMemberId(int memberId);
 
     // Finder methods -> find by some other attribute
     Member findMemberByUsername(String username);
+    LibraryCard findLibraryCardByMemberUsername(String memberUsername);
 
     // Create a single object  methods
     Admin createAdmin(Admin admin);

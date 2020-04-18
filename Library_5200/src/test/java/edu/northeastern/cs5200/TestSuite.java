@@ -1,6 +1,5 @@
 package edu.northeastern.cs5200;
 
-
 import edu.northeastern.cs5200.daos.*;
 import edu.northeastern.cs5200.models.*;
 import org.apache.tomcat.jni.Library;
@@ -26,39 +25,51 @@ import java.util.Set;
 
 public class TestSuite {
 
-    @Autowired
-    LibraryImpl libraryDao;
+	@Autowired
+	LibraryImpl libraryDao;
 
+	static Member andrew, jason, julia, alice;
+	static Book sapiens;
 
-    static Member andrew, jason, julia, alice;
-    static Book sapiens;
+//	@Test
+//	@Order(1)
+//	public void aTest() {
+//        libraryDao.truncateDatabase();
+//
+//        andrew = new Member();
+//        andrew.setFirstName("Andrew");
+//        andrew.setLastName("Seedholm");
+//        andrew.setUsername("aseedholm");
+//        andrew.setPassword("1234");
+//        andrew.setEmail("a.s@northeastern.edu");
+//
+//        libraryDao.createMember(andrew);
+//
+//        List<Member> allMembers = libraryDao.findAllMembers();
+//        assertEquals(1, allMembers.size());
+//
+//        sapiens = new Book();
+//        sapiens.setGenre(Genre.HISTORY);
+//        sapiens.setTitle("Sapiens");
+//        sapiens.addCopy();
+//
+//        libraryDao.createBook(sapiens);
+//        List<Book> allBooks = libraryDao.findAllBooks();
+//        assertEquals(1, allBooks.size());
+//
+//	}
 
-    @Test
-    @Order(1)
-    public void aTest() {
-        libraryDao.truncateDatabase();
-
-        andrew = new Member();
-        andrew.setFirstName("Andrew");
-        andrew.setLastName("Seedholm");
-        andrew.setUsername("aseedholm");
-        andrew.setPassword("1234");
-        andrew.setEmail("a.s@northeastern.edu");
-
-        libraryDao.createMember(andrew);
-
-        List<Member> allMembers = libraryDao.findAllMembers();
-        assertEquals(1, allMembers.size());
-
-        sapiens = new Book();
-        sapiens.setGenre(Genre.HISTORY);
-        sapiens.setTitle("Sapiens");
-        sapiens.addCopy();
-
-        libraryDao.createBook(sapiens);
-        List<Book> allBooks = libraryDao.findAllBooks();
-        assertEquals(1, allBooks.size());
-
-    }
-
+//	@Test
+//	@Order(2)
+//    public void bTest() {
+//		Librarian librarian = new Librarian();
+//		librarian.setFirstName("C");
+//		librarian.setLastName("C");
+//		librarian.setUsername("CCC");
+//		librarian.setPassword("14124");
+//		librarian.setEmail("C@northeastern.edu");
+//		libraryDao.createLibrarian(librarian);
+//		LibraryCard card = libraryDao.findLibraryCardByMemberUsername("DDD");
+//		System.out.println("CardID = " + card.getId());
+//    }
 }
