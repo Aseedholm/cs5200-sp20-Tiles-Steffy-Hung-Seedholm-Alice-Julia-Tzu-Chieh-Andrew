@@ -27,5 +27,16 @@ public class MemberController {
     return (List<Member>) libraryDao.findAllMembers();
   }
 
+  @GetMapping("/api/member/id/{id}")
+  public Member getById(@PathVariable("id") int id) {
+    return libraryDao.findMemberById(id);
+  }
+
+  @GetMapping("/api/member/username/{username}")
+  public Member getByUsername(@PathVariable("username") String username) {
+    System.out.println("looking for: " + username);
+    return libraryDao.findMemberByUsername(username);
+  }
+
 
 }
