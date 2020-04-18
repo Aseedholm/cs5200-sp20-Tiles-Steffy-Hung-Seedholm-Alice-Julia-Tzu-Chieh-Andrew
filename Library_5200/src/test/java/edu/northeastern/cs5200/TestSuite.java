@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -72,4 +73,36 @@ public class TestSuite {
 //		LibraryCard card = libraryDao.findLibraryCardByMemberUsername("DDD");
 //		System.out.println("CardID = " + card.getId());
 //    }
+
+	@Test
+	@Order(2)
+	public void testIsUnderThirteen() {
+
+		libraryDao.truncateDatabase();
+
+
+
+		Member olderKid = new Member();
+		olderKid.setDateOfBirth(new java.sql.Date(100, 6, 18));
+		olderKid.setFirstName("Older Kid");
+		olderKid.setUsername("OldKid1000");
+		libraryDao.createMember(olderKid);
+		assertFalse(olderKid.isUnderThirteen());
+
+
+		Member youngerKid = new Member();
+		youngerKid.setDateOfBirth(new java.sql.Date(119, 6, 18));
+		youngerKid.setFirstName("Younger Kid");
+		youngerKid.setUsername("little_guy");
+		youngerKid.setSponsoredBy(libraryDao.findMemberByUsername("OldKid1000").getId());
+		libraryDao.createMember(youngerKid);
+
+		assertTrue(youngerKid.isUnderThirteen());
+		assertFalse(olderKid.isUnderThirteen());
+
+		// TODO make it work/test with almost exactly  13 years old
+
+	}
+
+
 }
