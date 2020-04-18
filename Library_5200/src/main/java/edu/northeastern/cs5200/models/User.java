@@ -10,8 +10,8 @@ import javax.persistence.*;
 public class User {
 
 	@Id
-	@GeneratedValue
-	private Integer userId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -25,7 +25,7 @@ public class User {
 
 	public User(Integer id, String firstName, String lastName, String username, String password, String email,
 			Date dateOfBirth) {
-		this.userId = id;
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
@@ -35,11 +35,11 @@ public class User {
 	}
 
 	public Integer getId() {
-		return userId;
+		return id;
 	}
 
 	public void setId(Integer id) {
-		this.userId = id;
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -93,7 +93,7 @@ public class User {
 	@Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "userId=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName=" + lastName + '\'' +
                 ", username=" + username + '\'' +

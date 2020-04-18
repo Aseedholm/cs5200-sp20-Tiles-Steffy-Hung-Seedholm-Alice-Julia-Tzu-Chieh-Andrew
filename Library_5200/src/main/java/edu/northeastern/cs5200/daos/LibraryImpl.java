@@ -219,6 +219,38 @@ public class LibraryImpl implements LibraryDao {
 
     @Override
     public Member createMember(Member member) {
+
+        // Validate sponsorship - if age is < 13, must have valid sponsor
+        if (member.isUnderThirteen() ) {
+
+            // Check that the id is valid. If it is, set up the sponsorship and save the recipient and the sponsor
+            if (member.getSponsoredBy() == null) {
+                System.out.println("Invalid sponsorship member ID.");
+                return null;
+            }
+
+
+            int sponsoredById = member.getSponsoredBy().getId();
+            Member sponsor = memberRepository.findById(sponsoredById).get();
+
+            if (sponsor != null) {
+
+
+                sponsor.addSponsorRecipient(member);
+                memberRepository.save(sponsor);
+
+                member.setSponsoredBy(sponsor);
+                memberRepository.save(member);
+            }
+
+            else {
+                // Throw error? idk
+                System.out.println("Sponsor not found.");
+                // TODO
+            }
+
+        }
+
         memberRepository.save(member);
         return member;
     }
