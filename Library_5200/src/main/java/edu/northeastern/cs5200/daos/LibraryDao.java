@@ -10,6 +10,8 @@ public interface LibraryDao {
 
 
     void truncateDatabase();
+    void dropBooks();
+
 
     // Finder methods -> find all
     List<Admin> findAllAdmin();

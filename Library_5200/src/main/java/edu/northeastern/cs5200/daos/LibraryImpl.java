@@ -64,6 +64,14 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
+    public void dropBooks(){
+        bookCopyRepository.deleteAll();
+        bookRepository.deleteAll();
+        hardCopyBookRepository.deleteAll();
+        audioBookRepository.deleteAll();
+    }
+
+    @Override
     public List<Admin> findAllAdmin() {
         return (List<Admin>) adminRepository.findAll();
     }

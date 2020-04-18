@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.locks.Condition;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -74,33 +75,68 @@ public class TestSuite {
 //		System.out.println("CardID = " + card.getId());
 //    }
 
+//	@Test
+//	@Order(2)
+//	public void testIsUnderThirteen() {
+//
+//		libraryDao.truncateDatabase();
+//
+//
+//
+//		Member olderKid = new Member();
+//		olderKid.setDateOfBirth(new java.sql.Date(100, 6, 18));
+//		olderKid.setFirstName("Older Kid");
+//		olderKid.setUsername("OldKid1000");
+//		libraryDao.createMember(olderKid);
+//		assertFalse(olderKid.isUnderThirteen());
+//
+//
+//		Member youngerKid = new Member();
+//		youngerKid.setDateOfBirth(new java.sql.Date(119, 6, 18));
+//		youngerKid.setFirstName("Younger Kid");
+//		youngerKid.setUsername("little_guy");
+//		youngerKid.setSponsoredBy(libraryDao.findMemberByUsername("OldKid1000").getId());
+//		libraryDao.createMember(youngerKid);
+//
+//		assertTrue(youngerKid.isUnderThirteen());
+//		assertFalse(olderKid.isUnderThirteen());
+//
+//		// TODO make it work/test with almost exactly  13 years old
+//
+//	}
+
+
 	@Test
-	@Order(2)
-	public void testIsUnderThirteen() {
+	public void populateDB(){
 
-		libraryDao.truncateDatabase();
+		libraryDao.dropBooks();
+
+		Book sapiens = new Book();
+		sapiens.setTitle("Sapiens");
+		sapiens.setGenre(Genre.HISTORY);
+		sapiens.setISBN("abc123");
+
+		HardCopyBook sapiens1 = new HardCopyBook();
+		sapiens1.setBook(sapiens);
+		sapiens1.setAvailable(true);
+		sapiens1.setNumPages(400);
+		sapiens1.setCurrentCondition(CurrentCondition.NEW);
+
+		libraryDao.createBook(sapiens);
+		libraryDao.createHardCopyBook(sapiens1);
+
+
+		Book signal = new Book();
+		signal.setTitle("The Signal and the Noise");
+		signal.setGenre(Genre.SCIENCE);
+		signal.setISBN("zaz321");
+		signal.addAudiobook();
+		signal.addAudiobook();
+		signal.addHardCoverCopy();
+		libraryDao.createBook(signal);
 
 
 
-		Member olderKid = new Member();
-		olderKid.setDateOfBirth(new java.sql.Date(100, 6, 18));
-		olderKid.setFirstName("Older Kid");
-		olderKid.setUsername("OldKid1000");
-		libraryDao.createMember(olderKid);
-		assertFalse(olderKid.isUnderThirteen());
-
-
-		Member youngerKid = new Member();
-		youngerKid.setDateOfBirth(new java.sql.Date(119, 6, 18));
-		youngerKid.setFirstName("Younger Kid");
-		youngerKid.setUsername("little_guy");
-		youngerKid.setSponsoredBy(libraryDao.findMemberByUsername("OldKid1000").getId());
-		libraryDao.createMember(youngerKid);
-
-		assertTrue(youngerKid.isUnderThirteen());
-		assertFalse(olderKid.isUnderThirteen());
-
-		// TODO make it work/test with almost exactly  13 years old
 
 	}
 

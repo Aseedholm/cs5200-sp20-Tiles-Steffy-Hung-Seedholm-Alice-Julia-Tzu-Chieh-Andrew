@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Book {
 
     @Id
@@ -102,21 +101,20 @@ public class Book {
     }
 
 
-    public void addCopy(){
-        BookCopy newCopy = new BookCopy();
+    public void addHardCoverCopy(){
+        HardCopyBook newCopy = new HardCopyBook();
         newCopy.setBook(this);
         newCopy.setAvailable(true);
         newCopy.setEdition(null);
-        newCopy.setCondition(CurrentCondition.NEW);
+        newCopy.setCurrentCondition(CurrentCondition.NEW);
         this.bookCopies.add(newCopy);
     }
 
-    public void addCopy(Integer edition){
-        BookCopy newCopy = new BookCopy();
+    public void addAudiobook(){
+        AudioBook newCopy = new AudioBook();
         newCopy.setBook(this);
         newCopy.setAvailable(true);
-        newCopy.setEdition(edition);
-        newCopy.setCondition(CurrentCondition.NEW);
+        newCopy.setNarratedBy("An eloquent speaker");
         this.bookCopies.add(newCopy);
     }
 

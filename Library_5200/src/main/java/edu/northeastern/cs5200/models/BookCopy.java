@@ -5,32 +5,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class BookCopy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private Book book;
 
+    @Column(columnDefinition = "boolean default true")
     private Boolean isAvailable;
     private Integer edition;
-
-    @Enumerated(EnumType.STRING)
-    private CurrentCondition currentCondition;
 
 
     public BookCopy() {
     }
 
-    public BookCopy(Integer id, Book book, Boolean isAvailable, Integer edition, CurrentCondition currentCondition){
+    public BookCopy(Integer id, Book book, Boolean isAvailable, Integer edition){
         this.id = id;
         this.book = book;
         this.isAvailable = isAvailable;
         this.edition = edition;
-        this.currentCondition = currentCondition;
     }
 
     public Integer getId() {
@@ -47,14 +45,6 @@ public class BookCopy {
 
     public void setBook(Book book) {
         this.book = book;
-    }
-
-    public CurrentCondition getCondition() {
-        return currentCondition;
-    }
-
-    public void setCondition(CurrentCondition condition) {
-        this.currentCondition = condition;
     }
 
     public Boolean getAvailable() {
