@@ -299,16 +299,49 @@ public class LibraryImpl implements LibraryDao {
         return user;
     }
 
+    @Override
+    public boolean deleteAdmin(Integer id) {
+
+        if (adminRepository.findById(id).isPresent()) {
+            adminRepository.delete(adminRepository.findById(id).get());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteLibrarian(Integer id) {
+        if (librarianRepository.findById(id).isPresent()) {
+            librarianRepository.delete(librarianRepository.findById(id).get());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteMember(Integer id) {
+        if (memberRepository.findById(id).isPresent()) {
+            memberRepository.delete(memberRepository.findById(id).get());
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public boolean hasValidLibraryCard(Member member) {
         Calendar calendar = Calendar.getInstance();
         java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
 
-        Member foundMember = memberRepository.findById(member.getId()).get();
-        Date expirationDate = foundMember.getLibraryCard().getExpirationDate();
+        if (memberRepository.findById(member.getId()).isPresent()) {
+            Member foundMember = memberRepository.findById(member.getId()).get();
+            Date expirationDate = foundMember.getLibraryCard().getExpirationDate();
 
-        return (currentDate.compareTo(expirationDate) < 0);
+            return (currentDate.compareTo(expirationDate) < 0);
+        }
+
+        return false;
+
     }
 
     @Override

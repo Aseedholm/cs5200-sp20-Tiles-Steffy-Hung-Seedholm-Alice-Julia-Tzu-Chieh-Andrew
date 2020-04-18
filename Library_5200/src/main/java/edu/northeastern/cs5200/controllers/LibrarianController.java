@@ -37,6 +37,12 @@ public class LibrarianController {
     return libraryDao.findLibrarianByUsername(username);
   }
 
+  @DeleteMapping(value = "/api/librarians/{id}")
+  public boolean deleteLibrarian(@PathVariable Integer id) {
+    return libraryDao.deleteLibrarian(id);
+  }
+
+
 
 
 }

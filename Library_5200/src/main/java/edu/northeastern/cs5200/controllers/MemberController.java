@@ -35,5 +35,10 @@ public class MemberController {
     return libraryDao.findMemberByUsername(username);
   }
 
+  @DeleteMapping(value = "/api/members/{id}")
+  public boolean deleteMember(@PathVariable Integer id) {
+    return libraryDao.deleteMember(id);
+  }
+
 
 }

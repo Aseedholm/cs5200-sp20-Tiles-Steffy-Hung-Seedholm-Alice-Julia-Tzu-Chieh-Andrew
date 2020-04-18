@@ -47,6 +47,12 @@ public interface LibraryDao {
     User createUser(User user);
 
 
+    // Delete by ID methods
+    boolean deleteAdmin(Integer id);
+    boolean deleteLibrarian(Integer id);
+    boolean deleteMember(Integer id);
+
+
 
 
     // More advanced methods
