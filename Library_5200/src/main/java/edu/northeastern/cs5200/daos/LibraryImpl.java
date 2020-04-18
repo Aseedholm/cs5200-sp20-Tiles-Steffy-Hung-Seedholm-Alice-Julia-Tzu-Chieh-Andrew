@@ -142,6 +142,30 @@ public class LibraryImpl implements LibraryDao {
 
         return null;
     }
+    
+    @Override
+    public LibraryCard findLibraryCardByMemberId(int memberId) {
+    	Optional<Member> member = memberRepository.findById(memberId);
+        Optional<LibraryCard> card = libraryCardRepository.findById(member.get().getLibraryCard().getId());
+        if (card == null) {
+            return null;
+        }
+        return (LibraryCard)card.get();
+    }
+    
+    @Override
+    public LibraryCard findLibraryCardByMemberUsername(String memberUsername) {
+
+    	Iterable<Member> members = memberRepository.findAll();
+
+        for (Member m : members) {
+            if (m.getUsername().equals(memberUsername)) {
+            	return findLibraryCardByMemberId(m.getId());
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public Admin createAdmin(Admin admin) {
