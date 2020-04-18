@@ -1,12 +1,9 @@
 package edu.northeastern.cs5200.daos;
 
 import edu.northeastern.cs5200.models.*;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public interface LibraryDao {
@@ -29,10 +26,12 @@ public interface LibraryDao {
 
     // Finder methods -> find by ID
     Member findMemberById(int id);
+    Librarian findLibrarianById(int id);
     LibraryCard findLibraryCardByMemberId(int memberId);
 
     // Finder methods -> find by some other attribute
     Member findMemberByUsername(String username);
+    Librarian findLibrarianByUsername(String username);
     LibraryCard findLibraryCardByMemberUsername(String memberUsername);
 
     // Create a single object  methods

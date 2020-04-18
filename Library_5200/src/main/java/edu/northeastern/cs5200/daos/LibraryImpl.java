@@ -3,11 +3,9 @@ package edu.northeastern.cs5200.daos;
 import edu.northeastern.cs5200.models.*;
 import edu.northeastern.cs5200.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -122,11 +120,21 @@ public class LibraryImpl implements LibraryDao {
 
     @Override
     public Member findMemberById(int id) {
-        Optional member = memberRepository.findById(id);
-        if (member == null) {
+
+        if (!memberRepository.findById(id).isPresent()) {
             return null;
         }
-        return (Member)member.get();
+
+        return memberRepository.findById(id).get();
+    }
+
+    @Override
+    public Librarian findLibrarianById(int id) {
+        Librarian librarian = librarianRepository.findById(id).get();
+        if (librarian == null) {
+            return null;
+        }
+        return librarian;
     }
 
     @Override
@@ -145,7 +153,23 @@ public class LibraryImpl implements LibraryDao {
 
         return null;
     }
-    
+
+    @Override
+    public Librarian findLibrarianByUsername(String username) {
+        Iterable<Librarian> librarians = librarianRepository.findAll();
+
+        for (Librarian l : librarians) {
+            if (l.getUsername() == null) {
+                continue;
+            }
+            if (l.getUsername().equals(username)) {
+                return l;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public LibraryCard findLibraryCardByMemberId(int memberId) {
     	Optional<Member> member = memberRepository.findById(memberId);
@@ -284,12 +308,7 @@ public class LibraryImpl implements LibraryDao {
         Member foundMember = memberRepository.findById(member.getId()).get();
         Date expirationDate = foundMember.getLibraryCard().getExpirationDate();
 
-        if (currentDate.compareTo(expirationDate) < 0) {
-            return true;
-        }
-
-        return false;
-
+        return (currentDate.compareTo(expirationDate) < 0);
     }
 
     @Override
