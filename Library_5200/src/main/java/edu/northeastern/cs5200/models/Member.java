@@ -11,8 +11,7 @@ public class Member extends User {
 
     private Boolean isSponsored;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private LibraryCard libraryCard;
 
     @ManyToOne
@@ -89,6 +88,7 @@ public class Member extends User {
         return true;
 
     }
+
 
     @Override
     public String toString() {

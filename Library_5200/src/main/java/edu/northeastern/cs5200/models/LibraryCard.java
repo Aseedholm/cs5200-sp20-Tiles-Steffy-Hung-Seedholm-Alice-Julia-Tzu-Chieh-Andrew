@@ -13,15 +13,16 @@ public class LibraryCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(mappedBy = "libraryCard")
-    private Member member;
+    @OneToOne
+    @MapsId
+    private Member user;
 
 
     private Date expirationDate;
 
     public LibraryCard(Integer id, Member member, Date expirationDate) {
         this.id = id;
-        this.member = member;
+        this.user = member;
         this.expirationDate = expirationDate;
     }
 
@@ -37,12 +38,12 @@ public class LibraryCard {
         this.id = id;
     }
 
-    public Member getMember() {
-        return member;
+    public Member getUser() {
+        return user;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setUser(Member user) {
+        this.user = user;
     }
 
     public Date getExpirationDate() {
