@@ -41,6 +41,7 @@ public class MemberController {
     return libraryDao.deleteMember(id);
   }
 
+
   @PostMapping("/api/members/{memberId}/check-out/{bookId}/hard-copy")
   public LegerEntry checkOutBookHardCopy(@PathVariable Integer memberId, @PathVariable Integer bookId) {
     return libraryDao.checkOutBookHardCopy(memberId, bookId);
