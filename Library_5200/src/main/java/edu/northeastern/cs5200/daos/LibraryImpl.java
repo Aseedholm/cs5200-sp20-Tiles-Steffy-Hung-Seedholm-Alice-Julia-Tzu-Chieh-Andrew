@@ -496,7 +496,15 @@ public class LibraryImpl implements LibraryDao {
         return audioBookRepository.findAvailableBooksById(book.getId());
     }
 
+    @Override
+    public Set<Object[]> seeCheckedOutBooksAllTime(Integer memberId) {
+        return bookCopyRepository.findCheckedOutBooksAllTime(memberId);
+    }
 
+    @Override
+    public Set<Object[]> seeCheckedOutBooksCurrently(Integer memberId) {
+        return bookCopyRepository.findCheckedOutBooksCurrently(memberId);
+    }
 
 
 }

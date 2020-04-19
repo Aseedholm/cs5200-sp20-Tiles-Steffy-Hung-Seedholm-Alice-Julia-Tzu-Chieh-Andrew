@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import edu.northeastern.cs5200.models.Member;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -51,6 +52,18 @@ public class MemberController {
   public boolean checkOutBookAudio(@PathVariable Integer memberId, @PathVariable Integer bookId) {
     return libraryDao.checkOutAudiobook(memberId, bookId);
   }
+
+
+  @GetMapping("/api/members/{memberId}/checked-out-all-time")
+  public Set<Object[]> seeMyCheckedOutBooksAllTime(@PathVariable Integer memberId) {
+    return libraryDao.seeCheckedOutBooksAllTime(memberId);
+  }
+
+  @GetMapping("/api/members/{memberId}/checked-out-currently")
+  public Set<Object[]> seeMyCheckedOutBooksCurrently(@PathVariable Integer memberId) {
+    return libraryDao.seeCheckedOutBooksCurrently(memberId);
+  }
+
 
 
 

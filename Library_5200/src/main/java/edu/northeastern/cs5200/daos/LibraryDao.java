@@ -71,7 +71,8 @@ public interface LibraryDao {
     boolean checkOutAudiobook(Integer memberId, Integer bookId);
     Set<HardCopyBook> findAvailableHardCopies(Book book);
     Set<AudioBook> findAvailableAudiobooks(Book book);
-
+    Set<Object[]> seeCheckedOutBooksAllTime(Integer memberId);
+    Set<Object[]> seeCheckedOutBooksCurrently(Integer memberId);
 }
 
 
