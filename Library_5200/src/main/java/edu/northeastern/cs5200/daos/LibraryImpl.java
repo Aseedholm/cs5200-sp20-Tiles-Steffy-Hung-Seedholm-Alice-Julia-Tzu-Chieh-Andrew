@@ -267,6 +267,11 @@ public class LibraryImpl implements LibraryDao {
                 if (!sponsor.isUnderThirteen()) {
                     member.setSponsoredBy(sponsor.getId());
 
+                    Calendar today = Calendar.getInstance();
+                    today.add(Calendar.YEAR, 5);
+            		LibraryCard card = new LibraryCard(member.getId(), member, new java.sql.Date(today.getTime().getTime()));
+            		member.setLibraryCard(card);
+                    
                     // If so, save new member who is under 13 to db
                     memberRepository.save(member);
                     return member;
@@ -277,20 +282,22 @@ public class LibraryImpl implements LibraryDao {
                     return null;
                 }
             }
-
             else {
                 System.out.println("Sponsor not found.");
                 // TO DO throw exception?
                 return null;
             }
-
         }
-
         else {
+            Calendar today = Calendar.getInstance();
+            today.add(Calendar.YEAR, 5);
+    		LibraryCard card = new LibraryCard(member.getId(), member, new java.sql.Date(today.getTime().getTime()));
+    		member.setLibraryCard(card);
+    		
             memberRepository.save(member);
             return member;
         }
-
+        
     }
 
     @Override
