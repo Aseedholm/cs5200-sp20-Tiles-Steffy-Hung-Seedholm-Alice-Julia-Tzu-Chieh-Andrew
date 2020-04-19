@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
 public class BookCopy {
 
     @Id

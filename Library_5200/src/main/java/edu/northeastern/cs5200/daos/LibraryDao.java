@@ -64,7 +64,7 @@ public interface LibraryDao {
     // More advanced methods
     boolean hasValidLibraryCard(Member member);
     boolean checkOutBookHardCopy(Member member, Book book);
-    BookCopy findAvailableCopy(Book book);
+    Set<HardCopyBook> findAvailableHardCopy(Book book);
 
 }
 

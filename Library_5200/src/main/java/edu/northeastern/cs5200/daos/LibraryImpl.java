@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class LibraryImpl implements LibraryDao {
@@ -132,7 +133,7 @@ public class LibraryImpl implements LibraryDao {
     @Override
     public Member findMemberById(int id) {
 
-        if (!memberRepository.findById(id).isPresent()) {
+        if (!memberRepository.findById(id).isEmpty()) {
             return null;
         }
 
@@ -207,6 +208,7 @@ public class LibraryImpl implements LibraryDao {
 
     @Override
     public Book findBookByTitle(String title) {
+        System.out.println("findBookByTitle method in LibraryImpl class.");
         return bookRepository.findBookByTitle(title);
     }
 
@@ -363,13 +365,15 @@ public class LibraryImpl implements LibraryDao {
     @Override
     public boolean checkOutBookHardCopy(Member member, Book book) {
 
+        System.out.println("Validating library card....");
         // Check that user's library card is active
         if (!hasValidLibraryCard(member)) {
             return false;
         }
 
         // Check that we have at least one copy of the book, and it is available
-        BookCopy bookToBorrow = findAvailableCopy(book);
+        System.out.println("Finding available copy...");
+        BookCopy bookToBorrow = findAvailableHardCopy(book).iterator().next(); //TODO make this normal
 
         // Finally, check out the book by creating a leger entry
         Calendar calendar = Calendar.getInstance();
@@ -386,8 +390,9 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
-    public BookCopy findAvailableCopy(Book book) {
-        return bookCopyRepository.findAvailableBookByTitle(book.getTitle());
+    public Set<HardCopyBook> findAvailableHardCopy(Book book) {
+        System.out.println("Finding available hard copy....");
+        return hardCopyBookRepository.findAvailableBooksById(book.getId());
     }
 
 

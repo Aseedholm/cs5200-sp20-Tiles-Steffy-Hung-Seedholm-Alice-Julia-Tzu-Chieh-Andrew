@@ -9,7 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookCopyRepository extends CrudRepository<BookCopy, Integer> {
 
-    @Query("SELECT BookCopy FROM Book book, BookCopy book_copy WHERE book.title=:title and book_copy.isAvailable=true")
-    BookCopy findAvailableBookByTitle(String title);
 
 }
