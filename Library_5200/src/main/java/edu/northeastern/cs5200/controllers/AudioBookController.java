@@ -4,11 +4,7 @@ import java.util.List;
 
 import edu.northeastern.cs5200.models.HardCopyBook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.northeastern.cs5200.daos.LibraryDao;
 import edu.northeastern.cs5200.models.AudioBook;
@@ -25,6 +21,10 @@ public class AudioBookController {
 		return libraryDao.createAudioBook(book);
 	}
 
+	@PostMapping("api/audio-books/{id}")
+	public AudioBook createAudioBookById(@PathVariable Integer id) {
+		return libraryDao.addAudiobook(id);
+	}
 
 	@GetMapping("/api/audio-books")
 	public List<AudioBook> findAllAudioBooks() {

@@ -25,8 +25,6 @@ public class HardCopyBookController {
 		return libraryDao.addHardCopy(id);
 	}
 
-
-
 	@GetMapping("/api/hard-copy-book")
 	public List<HardCopyBook> findAllHardCopyBooks() {
 		return libraryDao.findAllHardCopyBooks();
