@@ -1,24 +1,30 @@
 package edu.northeastern.cs5200.models;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.sql.Date;
 import java.util.Set;
 
-@Entity(name="hard_copy_books")
-public class HardCopyBook extends Book {
+@Entity(name="hard_copy")
+public class HardCopyBook extends BookCopy {
 
     private Integer numPages;
+
+    @Enumerated(EnumType.STRING)
+    private CurrentCondition currentCondition;
 
     public HardCopyBook() {
         super();
     }
 
-    public HardCopyBook(Integer book_id, String title, Author author, Date yearPublished,
-                        String genre, String ISBN, Integer numPages, Set<BookCopy> bookCopies) {
-        super(book_id, title, author, yearPublished, genre, ISBN, bookCopies);
+    public HardCopyBook(Integer id, Book book, Boolean isAvailable, Integer edition, CurrentCondition currentCondition,
+                        Integer numPages) {
+        super(id, book, isAvailable, edition);
+        this.currentCondition = currentCondition;
         this.numPages = numPages;
-
     }
+
 
     public Integer getNumPages() {
         return numPages;
@@ -28,5 +34,21 @@ public class HardCopyBook extends Book {
         this.numPages = numPages;
     }
 
+    public CurrentCondition getCurrentCondition() {
+        return currentCondition;
+    }
 
+    public void setCurrentCondition(CurrentCondition currentCondition) {
+        this.currentCondition = currentCondition;
+    }
+
+
+    @Override
+    public String toString() {
+        return "HardCopyBook{" +
+                "book=" + getBook() +
+                ", numPages=" + numPages +
+                ", currentCondition=" + currentCondition +
+                '}';
+    }
 }

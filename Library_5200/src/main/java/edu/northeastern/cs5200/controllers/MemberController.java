@@ -1,12 +1,14 @@
 package edu.northeastern.cs5200.controllers;
 
 import edu.northeastern.cs5200.daos.LibraryDao;
+import edu.northeastern.cs5200.models.LegerEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import edu.northeastern.cs5200.models.Member;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -39,6 +41,30 @@ public class MemberController {
   public boolean deleteMember(@PathVariable Integer id) {
     return libraryDao.deleteMember(id);
   }
+
+
+  @PostMapping("/api/members/{memberId}/check-out/{bookId}/hard-copy")
+  public LegerEntry checkOutBookHardCopy(@PathVariable Integer memberId, @PathVariable Integer bookId) {
+    return libraryDao.checkOutBookHardCopy(memberId, bookId);
+  }
+
+  @PostMapping("/api/members/{memberId}/check-out/{bookId}/audiobook-copy")
+  public boolean checkOutBookAudio(@PathVariable Integer memberId, @PathVariable Integer bookId) {
+    return libraryDao.checkOutAudiobook(memberId, bookId);
+  }
+
+
+  @GetMapping("/api/members/{memberId}/checked-out-all-time")
+  public Set<Object[]> seeMyCheckedOutBooksAllTime(@PathVariable Integer memberId) {
+    return libraryDao.seeCheckedOutBooksAllTime(memberId);
+  }
+
+  @GetMapping("/api/members/{memberId}/checked-out-currently")
+  public Set<Object[]> seeMyCheckedOutBooksCurrently(@PathVariable Integer memberId) {
+    return libraryDao.seeCheckedOutBooksCurrently(memberId);
+  }
+
+
 
 
 }
