@@ -241,6 +241,8 @@ public class GoogleBooksAPI {
         } catch (NullPointerException e) {
             authorFullName = null;
         }
+        JSONObject imageLinks = (JSONObject) volumeInfo.get("imageLinks");
+        String thumbnail = (String) imageLinks.get("smallThumbnail");
 
         // Create a new book with that info
         Book newBook = new Book();
@@ -249,6 +251,7 @@ public class GoogleBooksAPI {
         newBook.setGenre(subject);
         newBook.setISBN(isbn);
         newBook.setTitle(title);
+        newBook.setThumbnailURL(thumbnail);
 
         // And a new author
         Author newAuthor = new Author();
