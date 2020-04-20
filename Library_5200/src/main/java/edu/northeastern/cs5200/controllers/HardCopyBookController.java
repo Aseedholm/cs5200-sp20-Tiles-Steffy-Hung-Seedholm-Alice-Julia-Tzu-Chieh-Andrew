@@ -22,7 +22,7 @@ public class HardCopyBookController {
 	}
 
 	@PostMapping("api/hard-copy-books/{id}")
-	public HardCopyBook createHardCopyBookById(@PathVariable Integer id) {
+	public HardCopyBook createHardCopyBookById(@PathVariable String id) {
 		return libraryDao.addHardCopy(id);
 	}
 
@@ -32,7 +32,7 @@ public class HardCopyBookController {
 	}
 
 	@GetMapping("/api/hard-copy-book/{bookId}")
-	public Set<HardCopyBook> getHardCopyBookBybookId(@PathVariable Integer bookId) {
+	public Set<HardCopyBook> getHardCopyBookBybookId(@PathVariable String bookId) {
 		return libraryDao.findHardCopyBooksByBookId(bookId);
 	}
 

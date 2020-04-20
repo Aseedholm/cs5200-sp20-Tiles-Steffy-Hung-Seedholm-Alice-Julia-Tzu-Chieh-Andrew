@@ -123,7 +123,7 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
-    public Book findBookById(int id) {
+    public Book findBookById(String id) {
         return null;
     }
 
@@ -170,12 +170,12 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
-    public Set<HardCopyBook> findHardCopyBooksByBookId(int id) {
+    public Set<HardCopyBook> findHardCopyBooksByBookId(String id) {
         return hardCopyBookRepository.findByBookId(id);
     }
 
     @Override
-    public Set<AudioBook> findAudioBooksByBookId(int id) {
+    public Set<AudioBook> findAudioBooksByBookId(String id) {
         return audioBookRepository.findByBookId(id);
     }
 
@@ -347,7 +347,7 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
-    public HardCopyBook addHardCopy(Integer bookId) {
+    public HardCopyBook addHardCopy(String bookId) {
         var foundBookInDb = bookRepository.findById(bookId);
 
         // Make sure book ID is valid
@@ -365,7 +365,7 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
-    public AudioBook addAudiobook(Integer bookId) {
+    public AudioBook addAudiobook(String bookId) {
         var foundBookInDb = bookRepository.findById(bookId);
 
         // Make sure book ID is valid
@@ -431,7 +431,7 @@ public class LibraryImpl implements LibraryDao {
 
 
     @Override
-    public LegerEntry checkOutBookHardCopy(Integer memberId, Integer bookId) {
+    public LegerEntry checkOutBookHardCopy(Integer memberId, String bookId) {
 
         var foundMemberInDb = memberRepository.findById(memberId);
         var foundBookInDb = bookRepository.findById(bookId);
@@ -457,7 +457,7 @@ public class LibraryImpl implements LibraryDao {
             // Finally, check out the book by creating a leger entry
             Calendar calendar = Calendar.getInstance();
             java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
-            LegerEntry newEntry = new LegerEntry(member.getId(), book.getId(), currentDate, null);
+            LegerEntry newEntry = new LegerEntry(member.getId(), bookToBorrow.getId(), currentDate, null);
             legerEntryRepository.save(newEntry);
 
             // Mark book copy as not available
@@ -473,7 +473,7 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
-    public boolean checkOutAudiobook(Integer memberId, Integer bookId) {
+    public boolean checkOutAudiobook(Integer memberId, String bookId) {
 
         var foundMemberInDb = memberRepository.findById(memberId);
         var foundBookInDb = bookRepository.findById(bookId);
@@ -499,7 +499,7 @@ public class LibraryImpl implements LibraryDao {
 
             // Finally, check out the book by creating a leger entry
             java.sql.Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-            LegerEntry newEntry = new LegerEntry(member.getId(), book.getId(), currentDate, null);
+            LegerEntry newEntry = new LegerEntry(member.getId(), bookToBorrow.getId(), currentDate, null);
             legerEntryRepository.save(newEntry);
 
             // Mark book copy as not available
