@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -140,7 +141,7 @@ public class GoogleBooksAPI {
      * @param input Google Book API date string
      * @return SQL date string
      */
-    private static Date StringToDate(String input) {
+    private static Timestamp StringToDate(String input) {
 
         // Default values
         Integer year = 2000;
@@ -166,7 +167,7 @@ public class GoogleBooksAPI {
         cal.set( cal.YEAR, year );
         cal.set( cal.MONTH, month );
         cal.set( cal.DATE, day );
-        return new java.sql.Date( cal.getTime().getTime() );
+        return new java.sql.Timestamp( cal.getTime().getTime() );
     }
 
     /**
@@ -183,7 +184,7 @@ public class GoogleBooksAPI {
         JSONObject identifierOne = (JSONObject) industryIdentifiers.get(0);
         String isbn = (String) identifierOne.get("identifier");
         JSONArray subjects = (JSONArray) volumeInfo.get("categories");
-        Date publishedDate = StringToDate((String)volumeInfo.get("publishedDate"));
+        Timestamp publishedDate = StringToDate((String)volumeInfo.get("publishedDate"));
         String title = (String) volumeInfo.get("title");
         String subject = "";
         try {
