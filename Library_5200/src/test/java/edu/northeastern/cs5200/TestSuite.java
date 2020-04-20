@@ -201,7 +201,12 @@ public class TestSuite {
 	@Test
 	public void testLoadBooks() throws IOException, ParseException {
 		GoogleBooksAPI api = new GoogleBooksAPI(libraryDao);
-		api.loadFromAPI();
+		libraryDao.truncateDatabase();
+		api.loadFromAPI("https://www.googleapis.com/books/v1/volumes?q=motorcycles" +
+				"&key=AIzaSyDzAEzIpOLfuwaEQcXsB-5vSN7b7lzJiMc");
+
+
+
 	}
 
 

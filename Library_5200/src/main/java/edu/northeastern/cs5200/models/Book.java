@@ -70,9 +70,8 @@ public class Book {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
-        System.out.println("Genre: " + genre);
-        this.genre = genre.toString();
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getISBN() {

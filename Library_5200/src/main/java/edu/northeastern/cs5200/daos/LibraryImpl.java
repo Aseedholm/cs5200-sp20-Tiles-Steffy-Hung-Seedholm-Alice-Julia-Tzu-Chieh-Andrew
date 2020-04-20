@@ -48,7 +48,6 @@ public class LibraryImpl implements LibraryDao {
     public void truncateDatabase() {
         adminRepository.deleteAll();
         audioBookRepository.deleteAll();
-        authorRepository.deleteAll();
         bookCopyRepository.deleteAll();
         bookRepository.deleteAll();
         hardCopyBookRepository.deleteAll();
@@ -57,6 +56,7 @@ public class LibraryImpl implements LibraryDao {
         libraryCardRepository.deleteAll();
         memberRepository.deleteAll();
         userRepository.deleteAll();
+        authorRepository.deleteAll();
     }
 
     @Override
