@@ -11,19 +11,22 @@ public class Book {
     @Id
     private String id;
 
-    @ManyToOne
-    private Author author;
+    @Column(unique=true)
+    private String ISBN;
 
     private String title;
+
     private Timestamp yearPublished;
 
     private String genre;
 
+    @ManyToOne
+    private Author author;
+
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private Set<BookCopy> bookCopies;
 
-    @Column(unique=true)
-    private String ISBN;
+
 
     public Book(){
         this.bookCopies = new HashSet<BookCopy>();
