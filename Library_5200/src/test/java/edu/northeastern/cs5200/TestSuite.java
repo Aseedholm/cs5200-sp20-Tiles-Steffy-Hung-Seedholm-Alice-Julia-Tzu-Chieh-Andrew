@@ -1,8 +1,10 @@
 package edu.northeastern.cs5200;
 
 import edu.northeastern.cs5200.daos.*;
+import edu.northeastern.cs5200.dataloader.GoogleBooksAPI;
 import edu.northeastern.cs5200.models.*;
 import org.apache.tomcat.jni.Library;
+import org.json.simple.parser.ParseException;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -181,18 +184,24 @@ public class TestSuite {
 //	}
 
 
+//	@Test
+//	public void testCheckOutBook() {
+//
+//
+//		Member steve = libraryDao.findMemberByUsername("johnsmith");
+//		Book desiredBook = libraryDao.findBookByTitle("The Signal and the Noise");
+//		//libraryDao.checkOutBookHardCopy(steve, desiredBook);
+//		libraryDao.checkOutAudiobook(steve.getId(), desiredBook.getId());
+//		assertEquals(2,libraryDao.findAllLegerEntries().size());
+//
+//
+//
+//	}
+
 	@Test
-	public void testCheckOutBook() {
-
-
-		Member steve = libraryDao.findMemberByUsername("johnsmith");
-		Book desiredBook = libraryDao.findBookByTitle("The Signal and the Noise");
-		//libraryDao.checkOutBookHardCopy(steve, desiredBook);
-		libraryDao.checkOutAudiobook(steve.getId(), desiredBook.getId());
-		assertEquals(2,libraryDao.findAllLegerEntries().size());
-
-
-
+	public void testLoadBooks() throws IOException, ParseException {
+		GoogleBooksAPI api = new GoogleBooksAPI(libraryDao);
+		api.loadFromAPI();
 	}
 
 

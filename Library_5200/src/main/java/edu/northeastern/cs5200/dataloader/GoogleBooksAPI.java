@@ -9,23 +9,29 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Tuple;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Scanner;
 
+@Component
 public class GoogleBooksAPI {
 
-    @Autowired
     LibraryDao libraryDao;
 
-    private void loadFromAPI() throws IOException, ParseException {
+    public GoogleBooksAPI(LibraryDao libraryDao){
+        this.libraryDao = libraryDao;
+    }
+
+
+    public void loadFromAPI() throws IOException, ParseException {
 
         // Cast API call into URL object
         //URL myURL = new URL("http://googleapis.com/books/v1/volumes?q=quilting");
@@ -74,8 +80,8 @@ public class GoogleBooksAPI {
                 Author newAuthor = bookAndAuthor.getValue();
                 System.out.println("BOOK: " + newBook);
 
-                libraryDao.createBook(newBook);
                 libraryDao.createAuthor(newAuthor);
+                libraryDao.createBook(newBook);
 
             }
 
@@ -155,10 +161,5 @@ public class GoogleBooksAPI {
         return new Pair<>(newBook,newAuthor);
     }
 
-
-    public static void main(String args[]) throws IOException, ParseException {
-        GoogleBooksAPI api  = new GoogleBooksAPI();
-        api.loadFromAPI();
-    }
 
 }
