@@ -12,6 +12,7 @@ public interface LibraryDao {
 
     void truncateDatabase();
     void dropBooks();
+    void dropUsers();
 
 
     // Finder methods -> find all

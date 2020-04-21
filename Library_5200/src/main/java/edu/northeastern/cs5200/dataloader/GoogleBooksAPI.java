@@ -10,12 +10,16 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
 import javax.xml.xpath.XPathExpressionException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import org.javatuples.Triplet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -25,9 +29,38 @@ import java.util.Scanner;
 public class GoogleBooksAPI {
 
     LibraryDao libraryDao;
+    List<String> famousBooks;
 
     public GoogleBooksAPI(LibraryDao libraryDao){
         this.libraryDao = libraryDao;
+        this.famousBooks = new ArrayList<>();
+
+    }
+
+    public void loadFamousBooks() throws FileNotFoundException {
+
+        File bookList = new File("./src/main/resources/static/famousBookList.txt");
+        Scanner sc = new Scanner(bookList);
+        while (sc.hasNextLine()) {
+            String bookName = sc.nextLine();
+            this.famousBooks.add(replaceSpacesWithDashes(bookName));
+        }
+
+    }
+
+    public void seedDatabaseWithPopularBooks(int limit) throws ParseException, XPathExpressionException, IOException {
+
+        int count = 0;
+        for (String bookTitle : famousBooks) {
+            System.out.println("adding: " + bookTitle);
+            loadBooksFromAPI("https://www.googleapis.com/books/v1/volumes?q="+bookTitle+"&key=AIzaSyDzAEzIpOLfuwaEQcXsB" +
+                    "-5vSN7b7lzJiMc&orderBy=relevance&maxResults=1");
+            count++;
+            if (count == limit) {
+                return;
+            }
+        }
+
     }
 
 
@@ -74,7 +107,7 @@ public class GoogleBooksAPI {
      * @throws IOException
      * @throws ParseException
      */
-    public void loadFromAPI(String url) throws IOException, ParseException, XPathExpressionException {
+    public void loadBooksFromAPI(String url) throws IOException, ParseException, XPathExpressionException {
 
         // Cast API call into URL object
         URL myURL = new URL(url);
@@ -85,6 +118,7 @@ public class GoogleBooksAPI {
         conn.connect();
 
         // Make sure connection works
+
         if (conn.getResponseCode() != 200) {
             throw new RuntimeException("HttpResponseCode: " + conn.getResponseCode());
         }
@@ -138,6 +172,7 @@ public class GoogleBooksAPI {
         }
 
     }
+
 
     /**
      * Util function to translate a full name into a url-digestible name (e.g., "John Holmes -> John-Holmes")

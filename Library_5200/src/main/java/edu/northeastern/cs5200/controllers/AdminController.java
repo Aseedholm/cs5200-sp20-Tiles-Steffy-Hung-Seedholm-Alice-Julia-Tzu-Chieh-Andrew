@@ -17,11 +17,16 @@ public class AdminController {
   @Autowired
   LibraryDao libraryDao;
 
-  @PostMapping("api/admins")
+
+  @PostMapping("/api/admins")
   public Admin createAdmin(@RequestBody Admin admin) {
     return libraryDao.createAdmin(admin);
   }
 
+  @GetMapping("/hello")
+  public String test() {
+    return "Hello World";
+  }
 
   @GetMapping("/api/admins")
   public List<Admin> findAllAdmin() {

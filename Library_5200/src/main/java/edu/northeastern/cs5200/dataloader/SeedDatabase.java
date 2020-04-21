@@ -39,6 +39,8 @@ public class SeedDatabase {
 
     public void createUsers() throws ParseException {
 
+
+
         LibraryMember newMember = new LibraryMember();
         newMember.setDateOfBirth(new Timestamp(stringDateToLong("01-April-1995")));
         newMember.setFirstName("Navya");
@@ -47,6 +49,15 @@ public class SeedDatabase {
         newMember.setUsername("navya12");
         newMember.setPassword("1234");
         libraryDao.createMember(newMember);
+
+        LibraryMember bob = new LibraryMember();
+        bob.setDateOfBirth(new Timestamp(stringDateToLong("01-April-1995")));
+        bob.setFirstName("bob");
+        bob.setLastName("bob");
+        bob.setEmail("bob@husky.neu.edu");
+        bob.setUsername("bob");
+        bob.setPassword("bob");
+        libraryDao.createMember(bob);
 
         LibraryMember newMember2 = new LibraryMember();
         newMember2.setDateOfBirth(new Timestamp(stringDateToLong("26-May-1985")));
@@ -86,6 +97,17 @@ public class SeedDatabase {
         siddhesh.setPassword("1234");
         libraryDao.createAdmin(siddhesh);
 
+        Admin admin = new Admin();
+        admin.setDateOfBirth(new Timestamp(stringDateToLong("09-October-1980")));
+        admin.setFirstName("admin");
+        admin.setLastName("admin");
+        admin.setEmail("admin@husky.neu.edu");
+        admin.setUsername("admin");
+        admin.setPassword("admin");
+        libraryDao.createAdmin(admin);
+
+
+
         Librarian sameer = new Librarian();
         sameer.setDateOfBirth(new Timestamp(stringDateToLong("16-December-1990")));
         sameer.setFirstName("Sameer");
@@ -103,6 +125,17 @@ public class SeedDatabase {
         sanju.setUsername("mongoose123");
         sanju.setPassword("1234");
         libraryDao.createLibrarian(sanju);
+
+        Librarian alice = new Librarian();
+        alice.setDateOfBirth(new Timestamp(stringDateToLong("22-February-1992")));
+        alice.setFirstName("alice");
+        alice.setLastName("alice");
+        alice.setEmail("alice@husky.neu.edu");
+        alice.setUsername("alice");
+        alice.setPassword("alice");
+        libraryDao.createLibrarian(alice);
+
+
 
     }
 

@@ -58,7 +58,6 @@ public class LibraryImpl implements LibraryDao {
         librarianRepository.deleteAll();
         libraryCardRepository.deleteAll();
         memberRepository.deleteAll();
-        userRepository.deleteAll();
         authorRepository.deleteAll();
     }
 
@@ -72,6 +71,20 @@ public class LibraryImpl implements LibraryDao {
         hardCopyBookRepository.deleteAll();
         audioBookRepository.deleteAll();
         bookRepository.deleteAll();
+
+    }
+
+
+    /**
+     * Deletes just the users from the database.
+     */
+    @Override
+    public void dropUsers(){
+
+        libraryCardRepository.deleteAll();
+        memberRepository.deleteAll();
+        adminRepository.deleteAll();
+        librarianRepository.deleteAll();
 
     }
 
@@ -133,7 +146,10 @@ public class LibraryImpl implements LibraryDao {
     @Override
     public Book findBookById(String id) {
         var foundBook = bookRepository.findById(id);
-        return foundBook.orElse(null);
+        if (foundBook.isPresent()) {
+            return foundBook.get();
+        }
+        return new Book();
 
     }
 
@@ -141,14 +157,20 @@ public class LibraryImpl implements LibraryDao {
     public LibraryMember findMemberById(int id) {
 
         var foundMember = memberRepository.findById(id);
-        return foundMember.orElse(null);
+        if (foundMember.isPresent()) {
+            return foundMember.get();
+        }
+        return new LibraryMember();
 
     }
 
     @Override
     public Librarian findLibrarianById(int id) {
         var librarianInDb = librarianRepository.findById(id);
-        return librarianInDb.orElse(null);
+        if (librarianInDb.isPresent()) {
+            return librarianInDb.get();
+        }
+        return new Librarian();
     }
 
     @Override
@@ -161,18 +183,25 @@ public class LibraryImpl implements LibraryDao {
 
     	    // Make sure the library card exists
             var foundCard = libraryCardRepository.findById(member.getLibraryCard().getId());
-            return foundCard.orElse(null);
-        }
+            if (foundCard.isPresent()) {
+                return foundCard.get();
+            }
+            return new LibraryCard();
+    	}
 
-    	return null;
+    	return new LibraryCard();
 
     }
 
     @Override
     public Author findAuthorById(Integer authorId) {
         var foundInDb = authorRepository.findById(authorId);
+        if (foundInDb.isPresent()) {
+            return foundInDb.get();
+        }
 
-        return foundInDb.orElse(null);
+        return new Author();
+
     }
 
     @Override
@@ -212,17 +241,21 @@ public class LibraryImpl implements LibraryDao {
 
     @Override
     public Book findBookByTitle(String title) {
-        Book bookToReturn = bookRepository.findBookByTitle(title);
-        return Objects.requireNonNullElseGet(bookToReturn, Book::new);
-
-
+        Book foundBook = bookRepository.findBookByTitle(title);
+        if (foundBook==null) {
+            return new Book();
+        }
+        return foundBook;
     }
 
     @Override
     public LibraryMember findSponsor(Integer memberId) {
         Integer sponsorId = memberRepository.findSponsorId(memberId);
         var sponsorInDb = memberRepository.findById(sponsorId);
-        return sponsorInDb.orElse(null);
+        if (sponsorInDb.isPresent()) {
+            return sponsorInDb.get();
+        }
+        return new LibraryMember();
     }
 
 
@@ -284,7 +317,7 @@ public class LibraryImpl implements LibraryDao {
 
             // When creating a new member <13 years old, they must have a sponsor.
             if (member.getSponsoredBy() == null) {
-                return null;
+                return new LibraryMember();
             }
 
             // Find the sponsor in the database
@@ -314,11 +347,11 @@ public class LibraryImpl implements LibraryDao {
                     return member;
                 }
                 else {
-                    return null;
+                    return new LibraryMember();
                 }
             }
             else {
-                return null;
+                return new LibraryMember();
             }
         }
         else {
@@ -351,7 +384,7 @@ public class LibraryImpl implements LibraryDao {
             return hardCopyBook;
         }
 
-        return null;
+        return new HardCopyBook();
 
     }
 
@@ -368,7 +401,7 @@ public class LibraryImpl implements LibraryDao {
             return newBookCopy;
         }
 
-        return null;
+        return new AudioBook();
     }
 
     @Override
@@ -482,18 +515,21 @@ public class LibraryImpl implements LibraryDao {
 
         // Make sure the member ID and book ID are valid
         if (foundMemberInDb.isPresent() && foundBookInDb.isPresent()) {
+            System.out.println("Member ID: " + memberId + " or book ID: " + bookId + " are  valid.");
             LibraryMember member = foundMemberInDb.get();
             Book book = foundBookInDb.get();
 
             // Check that user's library card is active
             if (hasInvalidLibraryCard(member)) {
-                return null;
+                System.out.println("Member has invalid library card.");
+                return new LegerEntry();
             }
 
             // Check that we have at least one copy of the book, and it is available
             Iterator<HardCopyBook> availableBooks = findAvailableHardCopies(book).iterator();
             if (!availableBooks.hasNext()) {
-                return null;
+                System.out.println("No copies are available.");
+                return new LegerEntry();
             }
 
             HardCopyBook bookToBorrow = availableBooks.next();
@@ -510,7 +546,8 @@ public class LibraryImpl implements LibraryDao {
             return newEntry;
         }
 
-        return null;
+        System.out.println("Member ID: " + memberId + " or book ID: " + bookId + " are NOT valid.");
+        return new LegerEntry();
 
     }
 
@@ -529,17 +566,20 @@ public class LibraryImpl implements LibraryDao {
 
         // Make sure the member ID and book ID are valid
         if (foundMemberInDb.isPresent() && foundBookInDb.isPresent()) {
+
             LibraryMember member = foundMemberInDb.get();
             Book book = foundBookInDb.get();
 
             // Check that user's library card is active
             if (hasInvalidLibraryCard(member)) {
+                System.out.println("That member doesn't have a good library card ");
                 return false;
             }
 
             // Check that we have at least one copy of the book, and it is available
             Iterator<AudioBook> availableBooks = findAvailableAudiobooks(book).iterator();
             if (!availableBooks.hasNext()) {
+                System.out.println("doesn't have any available copies");
                 return false;
             }
 
@@ -559,7 +599,7 @@ public class LibraryImpl implements LibraryDao {
 
             return true;
         }
-
+        System.out.println("That member/book can't be found " + memberId + " " + bookId);
         return false;
 
     }
