@@ -24,7 +24,7 @@ public interface LibraryDao {
     List<LegerEntry> findAllLegerEntries();
     List<Librarian> findAllLibrarians();
     List<LibraryCard> findAllLibraryCards();
-    List<Member> findAllMembers();
+    List<LibraryMember> findAllMembers();
     List<User> findAllUsers();
 
     // Finder methods -> find by ID
