@@ -68,7 +68,7 @@ public interface LibraryDao {
     boolean deleteAdmin(Integer id);
     boolean deleteLibrarian(Integer id);
     boolean deleteMember(Integer id);
-
+    boolean deleteBookCopy(Integer bookCopyId);
 
     // More advanced methods
     boolean hasValidLibraryCard(Member member);
@@ -81,6 +81,7 @@ public interface LibraryDao {
     Set<AudioBook> findAvailableAudiobooks(Book book);
     Set<Object[]> seeCheckedOutBooksAllTime(Integer memberId);
     Set<Object[]> seeCheckedOutBooksCurrently(Integer memberId);
+
 
 
 }

@@ -87,7 +87,7 @@ public class Member extends User {
         }
 
 
-        // If it is  less than zero, than this date is before the minimum DOB
+        // If it is less than zero, than this date is before the minimum DOB
         if (this.getDateOfBirth().compareTo((minDOB.getTime())) < 0) {
 
             // Therefore, they are at least 13 years old

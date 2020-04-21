@@ -5,12 +5,6 @@ import edu.northeastern.cs5200.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 @Repository
@@ -242,6 +236,7 @@ public class LibraryImpl implements LibraryDao {
         return bookRepository.findBookByTitle(title);
     }
 
+
     @Override
     public Admin createAdmin(Admin admin) {
         adminRepository.save(admin);
@@ -425,6 +420,20 @@ public class LibraryImpl implements LibraryDao {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean deleteBookCopy(Integer bookCopyId) {
+        var foundBookCopy = bookCopyRepository.findById(bookCopyId);
+
+        if (foundBookCopy.isPresent()) {
+            BookCopy bookCopy = foundBookCopy.get();
+            bookCopyRepository.delete(bookCopy);
+            return true;
+        }
+
+        return false;
+
     }
 
 
