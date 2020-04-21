@@ -24,7 +24,7 @@ public interface LibraryDao {
     List<LegerEntry> findAllLegerEntries();
     List<Librarian> findAllLibrarians();
     List<LibraryCard> findAllLibraryCards();
-    List<LibraryMember> findAllMembers();
+    List<Member> findAllMembers();
     List<User> findAllUsers();
 
     // Finder methods -> find by ID
@@ -32,6 +32,7 @@ public interface LibraryDao {
     LibraryMember findMemberById(int id);
     Librarian findLibrarianById(int id);
     LibraryCard findLibraryCardByMemberId(int memberId);
+    Author findAuthorById(Integer authorId);
 
 
     // Finder methods -> find by some other attribute
@@ -40,7 +41,6 @@ public interface LibraryDao {
     Librarian findLibrarianByUsername(String username);
     LibraryCard findLibraryCardByMemberUsername(String memberUsername);
     Book findBookByTitle(String title);
-    LibraryMember findSponsor(Integer memberId);
 
     // >> Find a set of objects
     Set<HardCopyBook> findHardCopyBooksByBookId(String id);
