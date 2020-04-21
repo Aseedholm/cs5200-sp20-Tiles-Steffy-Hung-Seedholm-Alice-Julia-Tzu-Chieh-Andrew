@@ -22,7 +22,6 @@ public class Book {
 
     private String genre;
 
-
     @ManyToOne
     private Author author;
 

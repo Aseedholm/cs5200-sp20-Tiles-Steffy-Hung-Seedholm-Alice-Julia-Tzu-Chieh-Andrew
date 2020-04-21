@@ -1,6 +1,7 @@
 package edu.northeastern.cs5200;
 
 import edu.northeastern.cs5200.daos.*;
+import edu.northeastern.cs5200.dataloader.GoodReadsAPI;
 import edu.northeastern.cs5200.dataloader.GoogleBooksAPI;
 import edu.northeastern.cs5200.models.*;
 import org.apache.tomcat.jni.Library;
@@ -16,7 +17,10 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -182,10 +186,13 @@ public class TestSuite {
 //	}
 
 	@Test
-	public void testLoadBooks() throws IOException, ParseException {
-		GoogleBooksAPI api = new GoogleBooksAPI(libraryDao);
-		api.loadFromAPI("https://www.googleapis.com/books/v1/volumes?q=mozart" +
-				"&key=AIzaSyDzAEzIpOLfuwaEQcXsB-5vSN7b7lzJiMc");
+	public void testLoadBooks() throws IOException, ParseException, ParserConfigurationException, XPathExpressionException, SAXException {
+//		GoogleBooksAPI api = new GoogleBooksAPI(libraryDao);
+//		api.loadFromAPI("https://www.googleapis.com/books/v1/volumes?q=mozart" +
+//				"&key=AIzaSyDzAEzIpOLfuwaEQcXsB-5vSN7b7lzJiMc");
+
+		GoodReadsAPI api = new GoodReadsAPI(libraryDao);
+		api.authorToAuthorID("Malcolm+Gladwell");
 
 	}
 
