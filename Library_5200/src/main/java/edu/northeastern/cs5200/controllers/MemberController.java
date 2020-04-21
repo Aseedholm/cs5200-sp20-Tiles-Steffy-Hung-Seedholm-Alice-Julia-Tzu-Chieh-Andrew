@@ -70,6 +70,11 @@ public class MemberController {
   }
 
 
+  @GetMapping("/api/members/{memberId}/sponsor")
+  public LibraryMember findSponsor(@PathVariable Integer memberId) {
+    return libraryDao.findSponsor(memberId);
+  }
+
 
 
 

@@ -40,6 +40,7 @@ public interface LibraryDao {
     Librarian findLibrarianByUsername(String username);
     LibraryCard findLibraryCardByMemberUsername(String memberUsername);
     Book findBookByTitle(String title);
+    LibraryMember findSponsor(Integer memberId);
 
     // >> Find a set of objects
     Set<HardCopyBook> findHardCopyBooksByBookId(String id);
@@ -80,7 +81,6 @@ public interface LibraryDao {
     Set<AudioBook> findAvailableAudiobooks(Book book);
     Set<Object[]> seeCheckedOutBooksAllTime(Integer memberId);
     Set<Object[]> seeCheckedOutBooksCurrently(Integer memberId);
-
 
 
 }

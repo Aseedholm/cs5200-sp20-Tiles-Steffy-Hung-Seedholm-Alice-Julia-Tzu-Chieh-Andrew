@@ -221,6 +221,16 @@ public class LibraryImpl implements LibraryDao {
         return bookRepository.findBookByTitle(title);
     }
 
+    @Override
+    public LibraryMember findSponsor(Integer memberId) {
+        Integer sponsorId = memberRepository.findSponsorId(memberId);
+        var sponsorInDb = memberRepository.findById(sponsorId);
+        if (sponsorInDb.isPresent()){
+            return sponsorInDb.get();
+        }
+        return null;
+    }
+
 
     @Override
     public Admin createAdmin(Admin admin) {

@@ -14,4 +14,7 @@ public interface MemberRepository extends CrudRepository<LibraryMember, Integer>
     LibraryMember findMemberByUsername(String username);
 
 
+    @Query("SELECT libraryMember.sponsoredBy FROM LibraryMember libraryMember  " +
+            "where libraryMember.id=:memberId")
+    Integer findSponsorId(Integer memberId);
 }
