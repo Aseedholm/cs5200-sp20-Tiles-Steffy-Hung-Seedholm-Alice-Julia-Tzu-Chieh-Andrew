@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
+import org.javatuples.Triplet;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -91,7 +92,7 @@ public class GoogleBooksAPI {
      * Seeds the library!
      * @param book The book to make copies of
      */
-    private void generateBookCopiesRandomly(Book book) {
+    private void generateBookCopiesRandomly(Book book, JSONObject bookCopyDetails) {
 
         int max = 3;
         int min = 0;
@@ -104,6 +105,7 @@ public class GoogleBooksAPI {
             newCopy.setBook(book);
             newCopy.setAvailable(true);
             newCopy.setCurrentCondition(CurrentCondition.getRandomCondition());
+            newCopy.setNumPages((Integer) bookCopyDetails.get("pageCount"));
             libraryDao.createHardCopyBook(newCopy);
         }
 
@@ -167,14 +169,15 @@ public class GoogleBooksAPI {
             // Get data in that array
             for (int i = 0; i < jsonarr_1.size(); i++) {
                 JSONObject book = (JSONObject) jsonarr_1.get(i);
-                Pair<Book, Author> bookAndAuthor = JSONtoBook(book);
+                Triplet<Book, Author, JSONObject> bookAndAuthor = JSONtoBook(book);
 
                 // It will be null if there was a problem extracting any daya
                 if (bookAndAuthor == null) {
                     continue;
                 }
-                Book newBook = bookAndAuthor.getKey();
-                Author newAuthor = bookAndAuthor.getValue();
+                Book newBook = bookAndAuthor.getValue0();
+                Author newAuthor = bookAndAuthor.getValue1();
+                JSONObject details = bookAndAuthor.getValue2();
 
                 // Save it to database
                 newBook.setAuthor(newAuthor);
@@ -182,7 +185,7 @@ public class GoogleBooksAPI {
                 libraryDao.createBook(newBook);
 
                 // Create book copies
-                generateBookCopiesRandomly(newBook);
+                generateBookCopiesRandomly(newBook, details);
 
             }
 
@@ -207,7 +210,6 @@ public class GoogleBooksAPI {
         }
         return output.toString();
     }
-
 
     /**
      * This method takes as input a string date from Google Books API in one of these formats:
@@ -248,12 +250,13 @@ public class GoogleBooksAPI {
         return new java.sql.Timestamp( cal.getTime().getTime() );
     }
 
+
     /**
      * This method converts a JSONObject book from the Google books API to a Book and Author.
      * @param inputBook from google books API
      * @return the same info in our data model
      */
-    private Pair<Book,Author> JSONtoBook(JSONObject inputBook) throws IOException, XPathExpressionException {
+    private Triplet<Book,Author,JSONObject> JSONtoBook(JSONObject inputBook) throws IOException, XPathExpressionException {
 
         // Extracting all the info out of the JSON object //TODO extract book_copy info such as # pages
         try {
@@ -265,6 +268,7 @@ public class GoogleBooksAPI {
             JSONArray subjects = (JSONArray) volumeInfo.get("categories");
             Timestamp publishedDate = StringToDate((String)volumeInfo.get("publishedDate"));
             String title = (String) volumeInfo.get("title");
+            Integer pageCount = ((Long)volumeInfo.get("pageCount")).intValue();
             String subject = "";
             try {
                 subject = (String) subjects.get(0);
@@ -297,13 +301,17 @@ public class GoogleBooksAPI {
                 String goodReadsAuthorID = goodReadsAPI.authorToAuthorID(replaceSpacesWithDashes(authorFullName));
                 newAuthor = goodReadsAPI.idToAuthor(goodReadsAuthorID);
             }
-
             else {
                 System.out.println("Book without author?: " + newBook.getTitle());
             }
 
+            // And book copy details
+            JSONObject details = new JSONObject();
+            details.put("pageCount", pageCount);
+
             // Return the two new objects
-            return new Pair<>(newBook,newAuthor);
+            return new Triplet<>(newBook,newAuthor, details);
+
         } catch (NullPointerException e) {
             return null;
         }
