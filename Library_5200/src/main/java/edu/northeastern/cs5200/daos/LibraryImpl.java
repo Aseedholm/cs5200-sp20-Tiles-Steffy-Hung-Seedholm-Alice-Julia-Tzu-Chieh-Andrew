@@ -220,6 +220,11 @@ public class LibraryImpl implements LibraryDao {
     }
 
     @Override
+    public Set<LibraryMember> findRecipientsOfSponsorship(Integer memberId) {
+        return memberRepository.findRecipientsOfSponsorship(memberId);
+    }
+
+    @Override
     public LibraryMember findMemberByUsername(String username) {
 
         return memberRepository.findMemberByUsername(username);

@@ -49,6 +49,7 @@ public interface LibraryDao {
     Set<HardCopyBook> findHardCopyBooksByBookId(String id);
     Set<AudioBook> findAudioBooksByBookId(String id);
     Set<Book> findBooksByAuthor(String authorName);
+    Set<LibraryMember> findRecipientsOfSponsorship(Integer memberId);
 
     // Create a single object methods
     Admin createAdmin(Admin admin);
@@ -90,6 +91,8 @@ public interface LibraryDao {
     Admin updateAdmin(Integer adminId, @RequestBody Admin admin);
     Librarian updateLibrarian(Integer librarianId, @RequestBody Librarian librarian);
     LibraryMember updateMember(Integer memberId, @RequestBody LibraryMember member);
+
+
 }
 
 
