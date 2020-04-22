@@ -273,8 +273,15 @@ public class LibraryImpl implements LibraryDao {
 
     @Override
     public Author createAuthor(Author author) {
-        authorRepository.save(author);
-        return author;
+
+        Author authorInDb = authorRepository.findAuthorByFullName(author.getFirstName(), author.getLastName());
+        if (authorInDb == null) {
+            authorRepository.save(author);
+            return author;
+        }
+
+        return authorInDb;
+
     }
 
     @Override
@@ -436,6 +443,7 @@ public class LibraryImpl implements LibraryDao {
 
         if (foundMember.isPresent()) {
             memberRepository.delete(foundMember.get());
+
             return true;
         }
         return false;

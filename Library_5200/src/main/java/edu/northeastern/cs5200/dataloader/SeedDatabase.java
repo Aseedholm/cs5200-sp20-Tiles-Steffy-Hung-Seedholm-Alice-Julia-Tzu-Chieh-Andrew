@@ -59,6 +59,16 @@ public class SeedDatabase {
         bob.setPassword("bob");
         libraryDao.createMember(bob);
 
+        LibraryMember charlie = new LibraryMember();
+        charlie.setDateOfBirth(new Timestamp(stringDateToLong("01-April-2019")));
+        charlie.setFirstName("charlie");
+        charlie.setLastName("charlie");
+        charlie.setEmail("charlie@husky.neu.edu");
+        charlie.setUsername("charlie");
+        charlie.setPassword("charlie");
+        charlie.setSponsor(bob);
+        libraryDao.createMember(charlie);
+
         LibraryMember newMember2 = new LibraryMember();
         newMember2.setDateOfBirth(new Timestamp(stringDateToLong("26-May-1985")));
         newMember2.setFirstName("Nesara");

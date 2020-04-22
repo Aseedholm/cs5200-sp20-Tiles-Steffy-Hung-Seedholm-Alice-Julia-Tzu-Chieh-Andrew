@@ -38,17 +38,18 @@ public class TestSuite {
 //				"&key=AIzaSyDzAEzIpOLfuwaEQcXsB-5vSN7b7lzJiMc");
 
 		api.loadFamousBooks();
-		api.seedDatabaseWithPopularBooks(10);
+		//api.seedDatabaseWithPopularBooks(105);
+		// api.loadTestBooks();
 
 	}
 
 
-//	@Test
-//	public void loadUsers() throws java.text.ParseException {
-//		libraryDao.dropUsers();
-//		SeedDatabase seed = new SeedDatabase(libraryDao);
-//		seed.createUsers();
-//	}
+	@Test
+	public void loadUsers() throws java.text.ParseException {
+		libraryDao.dropUsers();
+		SeedDatabase seed = new SeedDatabase(libraryDao);
+		seed.createUsers();
+	}
 
 
 }
