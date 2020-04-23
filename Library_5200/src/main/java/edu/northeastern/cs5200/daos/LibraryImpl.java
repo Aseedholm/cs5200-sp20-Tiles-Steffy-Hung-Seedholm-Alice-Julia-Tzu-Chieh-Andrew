@@ -228,20 +228,34 @@ public class LibraryImpl implements LibraryDao {
     @Override
     public LibraryMember findMemberByUsername(String username) {
 
-        return memberRepository.findMemberByUsername(username);
+        LibraryMember found = memberRepository.findMemberByUsername(username);
+        if (found == null) {
+            return new LibraryMember();
+        }
+
+        return found;
 
     }
 
     @Override
     public Librarian findLibrarianByUsername(String username) {
 
-        return librarianRepository.findLibrarianByUsername(username);
+        Librarian found = librarianRepository.findLibrarianByUsername(username);
+        if (found == null) {
+            return new Librarian();
+        }
+        return found;
 
     }
     
     @Override
     public LibraryCard findLibraryCardByMemberUsername(String memberUsername) {
-        return libraryCardRepository.findByMemberUsername(memberUsername);
+
+        LibraryCard found = libraryCardRepository.findByMemberUsername(memberUsername);
+        if (found == null) {
+            return new LibraryCard();
+        }
+        return found;
 
     }
 
@@ -249,7 +263,9 @@ public class LibraryImpl implements LibraryDao {
     public Book findBookByTitle(String title) {
         Book foundBook = bookRepository.findBookByTitle(title);
         if (foundBook==null) {
+
             return new Book();
+
         }
         return foundBook;
     }
